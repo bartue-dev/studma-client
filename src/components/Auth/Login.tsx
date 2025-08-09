@@ -9,6 +9,10 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
+import { Button } from "@/components/ui/button"
+import { LoaderCircle } from 'lucide-react';
+import { Input } from "@/components/ui/input"
+
 //server error types
 type ErrorTypes = {
   error?: string
@@ -94,11 +98,11 @@ export default function Login() {
         >
           Username
         </label>
-        <input 
+        <Input
           type="text" 
           id="username"
           {...register("username")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.username && <p className="text-sm text-red-500">{errors?.username?.message}</p>}
       </div>
@@ -110,25 +114,26 @@ export default function Login() {
         >
           Password
         </label>
-        <input 
+        <Input 
           type="password" 
           id="password"
           {...register("password")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.password && <p className="text-sm text-red-500">{errors?.password?.message}</p>}
       </div>
     
-      <button 
+      <Button
         type="submit"
-        className="place-self-start btn btn-primary w-full text-white"
+        variant="outline"
+        className="w-full border-none p-3 bg-blue-500 text-white cursor-pointer py-5"
         disabled={isLoading ? true : false}
       >
-        { isLoading && <span className="loading loading-spinner text-neutral"></span> }
+        { isLoading && <LoaderCircle className="animate-spin"/> }
         Submit
-      </button>
+      </Button>
 
-      <p className="text-sm">No account? <Link to="/register" className="link link-primary">Create an account</Link></p>
+      <p className="text-sm">No account? <Link to="/register" className="underline text-blue-600">Create an account</Link></p>
     </form>
   </div>
   )
