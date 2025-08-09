@@ -32,13 +32,11 @@ const baseQueryWithReauth: BaseQueryFn<
 
     if (refreshResult?.data) {
       const refreshData = refreshResult.data as {
-        username: string,
         fullname: string,
         accessToken: string
       }
       //store the new token
       api.dispatch(setCredentials({
-        username: refreshData.username,
         fullname: refreshData.fullname,
         accessToken: refreshData.accessToken
       }));
