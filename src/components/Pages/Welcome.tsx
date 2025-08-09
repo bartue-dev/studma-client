@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../features/hooks"
-import { selectCurrentUser, selectCurrentToken } from "../../features/authSlice"
+import { selectCurrentUser, selectCurrentToken } from "../../features/Auth/authSlice"
 
 export default function Welcome(){
   const user = useAppSelector(selectCurrentUser);

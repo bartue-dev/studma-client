@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { useAppSelector, useAppDispatch } from "../../features/hooks"
-import { setCredentials, selectCurrentToken } from "../../features/authSlice"
-import { useRefreshMutation } from "../../features/authApiSlice"
+import { setCredentials, selectCurrentToken } from "../../features/Auth/authSlice"
+import { useRefreshMutation } from "../../features/Auth/authApiSlice"
 
 //able to login current user event the page is refresh
 export default function PersistLogin() {

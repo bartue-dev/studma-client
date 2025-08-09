@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useSignupMutation } from "../../features/authApiSlice"
+import { useSignupMutation } from "../../features/Auth/authApiSlice"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"

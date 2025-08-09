@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 
 import { useAppDispatch } from "../../features/hooks"
-import { setCredentials } from "../../features/authSlice"
-import { useLoginMutation } from "../../features/authApiSlice"
+import { setCredentials } from "../../features/Auth/authSlice"
+import { useLoginMutation } from "../../features/Auth/authApiSlice"
 
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"

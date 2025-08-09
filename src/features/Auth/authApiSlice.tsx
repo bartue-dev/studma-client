@@ -1,4 +1,4 @@
-import { apiSlice } from "./api/api";
+import { apiSlice } from "../api/api";
 
 type LoginCredentials = {
   username: string,
