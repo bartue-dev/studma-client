@@ -6,6 +6,10 @@ import { z } from "zod"
 
 import { useState } from "react"
 
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { LoaderCircle } from "lucide-react"
+
 const RegisterSchema = z.object({
   firstname: z.string().min(2, "Firstname must be atleast 2 or more characters"),
   lastname: z.string().min(2, "Lastname must be atleast 2 or more characters"),
@@ -79,11 +83,11 @@ export default function Register() {
         >
           Firstname
         </label>
-        <input 
+        <Input 
           type="text" 
           id="firstname"
           {...register("firstname")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.firstname && <p className="text-sm text-red-500">{errors?.firstname?.message}</p>}
       </div>
@@ -96,11 +100,11 @@ export default function Register() {
         >
           Lastname
         </label>
-        <input 
+        <Input 
           type="text" 
           id="lastname"
           {...register("lastname")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.lastname && <p className="text-sm text-red-500">{errors?.lastname?.message}</p>}
       </div>
@@ -113,11 +117,11 @@ export default function Register() {
         >
           Username
         </label>
-        <input 
+        <Input 
           type="text" 
           id="username"
           {...register("username")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.username && <p className="text-sm text-red-500">{errors?.username?.message}</p>}
       </div>
@@ -130,26 +134,26 @@ export default function Register() {
         >
           Password
         </label>
-        <input 
+        <Input 
           type="password" 
           id="password"
           {...register("password")}
-          className="input"
+          className="border border-gray-300 shadow-none focus:outline-gray-400"
           />
         {errors?.password && <p className="text-sm text-red-500">{errors?.password?.message}</p>}
       </div>
     
       {/* submit button */}
-      <button 
+      <Button 
         type="submit"
-        className="place-self-start btn btn-primary w-full text-white"
+        className="w-full border-none p-3 bg-blue-500 text-white cursor-pointer py-5"
         disabled={isLoading ? true : false}
       >
-        { isLoading && <span className="loading loading-spinner text-neutral"></span> }
-        Submit
-      </button>
+        { isLoading && <LoaderCircle className="animate-spin"/> }
+        Create
+      </Button>
 
-      <p className="text-sm">Already have an account? <Link to="/login" className="link link-primary">Login</Link></p>
+      <p className="text-sm">Already have an account? <Link to="/login" className="underline text-blue-600">Login</Link></p>
 
     </form>
   </div>
