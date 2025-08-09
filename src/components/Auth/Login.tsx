@@ -77,12 +77,12 @@ export default function Login() {
   }
 
   return (
-  <div className="font-Sans justify-items-center">
+  <div className="font-Sans justify-items-center bg-gray-50 py-15 h-screen">
     <form 
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 w-100 px-10 py-8 mt-15 shadow-sm border border-gray-100 rounded-md"  
+      className="flex flex-col gap-5 w-100 px-10 py-8 shadow-sm border border-gray-100 rounded-md bg-white"  
     >
-      <h1 className="text-xl text-center font-semibold">Student Management System</h1>
+      <h1 className="text-xl text-center font-semibold">Student Management System | Login</h1>
 
         {/* server error message */}
       {typeof serverError === "object" && serverError?.error && <p className="text-sm text-red-500">{serverError.error}</p>}
