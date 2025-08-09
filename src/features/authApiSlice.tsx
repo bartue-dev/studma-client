@@ -11,7 +11,6 @@ type LoginResponse = {
 } 
 
 type RefreshResponse = {
-  username: string, 
   fullname: string,
   accessToken: string
 }
