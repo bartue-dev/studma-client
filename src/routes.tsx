@@ -1,25 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Login from "./components/Auth/Login";
-import Home from "./components/Pages/Home";
+import Home from "./Pages/Home";
 import RequiredAuth from "./components/Common/RequiredAuth";
-import Welcome from "./components/Pages/Welcome";
 import PersistLogin from "./components/Common/PersistLogin";
 import Register from "./components/Auth/Register";
+import Attendance from "./Pages/Attendance";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     children: [
-      {index: true, element: <Home/>},
-      {path: "home", element: <Home/>},
 
       {element: <PersistLogin/>,
         children: [
           {element: <RequiredAuth />,
             children: [
-              {path: "welcome", element: <Welcome />}
+              {path: "home", element: <Home/>,
+                children: [
+                  {index: true, element: <Attendance/>},
+                  {path: "attendance", element: <Attendance/>}
+                ]
+              }
             ]
           }
         ]
