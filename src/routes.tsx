@@ -2,9 +2,10 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Login from "./components/Auth/Login";
 import Home from "./components/Pages/Home";
-import RequiredAuth from "./components/common/RequiredAuth";
+import RequiredAuth from "./components/Common/RequiredAuth";
 import Welcome from "./components/Pages/Welcome";
-import PersistLogin from "./components/common/PersistLogin";
+import PersistLogin from "./components/Common/PersistLogin";
+import Register from "./components/Auth/Register";
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +27,6 @@ export const router = createBrowserRouter([
       
     ]
   },
-  { 
-    path: "login",
-    element: <Login/>
-  }
+  {path: "login", element: <Login/>},
+  {path: "register", element: <Register/>},
 ])
