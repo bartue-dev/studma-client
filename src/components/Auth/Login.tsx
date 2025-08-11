@@ -56,7 +56,7 @@ export default function Login() {
 
       console.log("USER DATA:", userData)
 
-      navigate("/welcome")
+      navigate("/home")
     } catch (err) {
       console.error(err)
 
