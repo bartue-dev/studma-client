@@ -59,9 +59,9 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader 
-        className="bg-sky-600 text-white text-xl font-bold p-4"
+        className="bg-sky-600 text-white text-xl font-bold h-16 px-4"
       >
-       <div className="flex items-center gap-2">
+       <div className="flex items-center gap-2 h-full">
          <NotebookText />
           STUDMA
        </div>
