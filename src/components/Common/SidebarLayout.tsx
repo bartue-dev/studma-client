@@ -5,8 +5,8 @@ export default function SidebarLayout({ children }: { children: React.ReactNode 
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
-        <SidebarTrigger />
+      <SidebarTrigger className="border md:hidden"/>
+      <main className="border w-full">
         {children}
       </main>
     </SidebarProvider>
