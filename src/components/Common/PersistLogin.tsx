@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { useAppSelector, useAppDispatch } from "../../features/hooks"
 import { setCredentials, selectCurrentToken } from "../../features/Auth/authSlice"
 import { useRefreshMutation } from "../../features/Auth/authApiSlice"
+import { PuffLoader } from "react-spinners"
 
 //able to login current user event the page is refresh
 export default function PersistLogin() {
@@ -52,7 +53,9 @@ export default function PersistLogin() {
   return (
     <div>
       { isLoading
-        ? <p className="text-sm italic text-center">Page Loading Please wait...</p>
+        ? <div className="border w-full h-screen flex justify-center items-center">
+            <PuffLoader size={200}/>
+          </div>
         : <Outlet/>}
     </div>
   )
