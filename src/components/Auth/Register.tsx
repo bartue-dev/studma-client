@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useSignupMutation } from "../../features/Auth/authApiSlice"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,6 +9,7 @@ import { useState } from "react"
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 import { LoaderCircle } from "lucide-react"
+import { Toaster, toast } from "sonner"
 
 const RegisterSchema = z.object({
   firstname: z.string().min(2, "Firstname must be atleast 2 or more characters"),
@@ -21,35 +22,37 @@ const RegisterSchema = z.object({
 type RegisterData = z.infer<typeof RegisterSchema>;
 
 export default function Register() {
-  const { register, handleSubmit, formState: {errors}} = useForm<RegisterData>({
+  const { register, handleSubmit, formState: {errors}, reset} = useForm<RegisterData>({
     resolver: zodResolver(RegisterSchema)
   });
 
   const [serverError, setServerError] = useState<{error?: string}>({})
-  const navigate = useNavigate();
 
   const [signup, {isLoading}] = useSignupMutation();
 
+  //register submit function
   const onSubmit = async (data: RegisterData) => {
     try {
-      const registerData = await signup({
+      await signup({
         firstname: data.firstname,
         lastname: data.lastname,
         username: data.username,
         password: data.password,
-      });
+      }).unwrap();
 
-      navigate("/login")
-
-      console.log("REGISTER RESPONSE:", registerData)
+      toast.success("Account registered!")
+      reset();
     } catch (err) {
       console.error(err);
       
-      const error = err as {status: number};
+      const error = err as {status: number, data: {message: string}};
       const serverError = {} as { error: string}
 
       if (!error?.status) {
         serverError.error = "No server response";
+      } else if (error?.data?.message.split(":")[0] === "P2002") {
+        serverError.error = "Username already exist"
+        console.log("DUPLICATE")
       } else if (error?.status === 400) {
         serverError.error = "Failed to create an account!"
       } else {
@@ -66,6 +69,7 @@ export default function Register() {
 
   return (
   <div className="font-Sans justify-items-center bg-gray-50 h-screen py-5">
+    <Toaster position="top-center"/>
     <form 
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-5 w-100 px-10 pt-8 pb-4 shadow-sm border border-gray-100 rounded-md bg-white"  
