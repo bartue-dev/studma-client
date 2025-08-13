@@ -10,7 +10,7 @@ import {
 
 import { BeatLoader } from "react-spinners";
 
-import { useGetAllStudentsQuery } from "@/features/Attendance/AttendanceApiSlice"
+import { useGetAllStudentsQuery } from "@/features/Student/StudentApiSlice"
 import { StatusCombobox } from "@/components/Common/StatusCombobox"
 
 import LastSevenDays from "@/components/Common/Last7Days";
