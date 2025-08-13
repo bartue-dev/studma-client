@@ -12,11 +12,11 @@ export default function Home() {
   return(
     <div className="font-Sans h-screen">
       <SidebarLayout>
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full bg-gray-50">
 
           {/* header */}
           <div 
-            className="h-16 px-10 bg-gray-100 flex items-center justify-between"
+            className="h-16 px-10 flex items-center justify-between"
           >
             <div className="relative">
               <Search size={20} className="text-gray-600 absolute left-2 top-2"/>
