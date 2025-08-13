@@ -40,6 +40,7 @@ export const router = createBrowserRouter([
       } 
     ]
   },
+  {index: true, element: <Login/>},
   {path: "login", element: <Login/>},
   {path: "register", element: <Register/>},
 ])
