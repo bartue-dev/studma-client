@@ -34,10 +34,10 @@ export default function LastSevenDays({ attendanceDate }: AttendanceDateType) {
 
   return (
     <div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-fit">
         {getLast7Days().map((data, i) => (
-          <div key={i} className="text-sm justify-items-center p-1">
-            <h1>{data.date.split("-")[2]}</h1>
+          <div key={i} className="text-sm justify-items-center p-2 ">
+            <h1 className="mb-2">{data.date.split("-")[2]}</h1>
             <span>
               { data.status === "PRESENT" ? <Check className="text-green-500" size={15}/> :
                 data.status === "ABSENT" ? <X className="text-red-500" size={15}/> :
