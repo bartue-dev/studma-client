@@ -37,9 +37,11 @@ export default function Attendance() {
           <TableCaption>List of Students</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[200px]">STUDENT NAME</TableHead>
-              <TableHead className="">PREVIOUS 7 DAYS STATUS</TableHead>
-              <TableHead >STATUS</TableHead>
+              <TableHead>STUDENT NAME</TableHead>
+              <TableHead className="text-center">GRADE</TableHead>
+              <TableHead className="text-center">SECTION</TableHead>
+              <TableHead>PREVIOUS 7 DAYS STATUS</TableHead>
+              <TableHead>STATUS</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -57,17 +59,15 @@ export default function Attendance() {
                     >
                       {student.firstname} {student.lastname}
                     </TableCell>
+                    <TableCell className="text-center"> {student.grade} </TableCell>
+                    <TableCell className="text-center"> {student.section} </TableCell>
                     <TableCell>
                      <LastSevenDays attendanceDate={student?.attendanceDate}/>
-                      {/* {student?.attendanceDate.map(attendance => (
-                        <div key={attendance.attendanceDateId}>
-                          <h1>{attendance.date}</h1>
-                          <h1>{attendance.status}</h1>
-                        </div>
-                      ))} */}
                     </TableCell>
                     <TableCell>
-                    <StatusCombobox attendanceDate={student?.attendanceDate}/>
+                    <StatusCombobox 
+                      attendanceDate={student?.attendanceDate}
+                      />
                     </TableCell>
                   </TableRow>
                   ))} 
