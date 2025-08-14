@@ -10,9 +10,7 @@ type studentsData = {
     accountId: string,
     grade: string,
     section: string,
-    batch: {
-      year: string,
-    },
+    batch: string,
     attendanceDate: {
       attendanceDateId: string,
       date: string,
@@ -27,7 +25,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       query: () => "/v1/students",
       keepUnusedDataFor: 60
     })
-  }),
+  })
 })
 
 export const { useGetAllStudentsQuery } = studentsApiSlice
