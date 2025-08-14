@@ -17,6 +17,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
+import { useUpdateAttendanceMutation } from "@/features/Attendance/AttendanceApiSlice"
+import z from "zod"
+
 type StatusComboboxProps = {
   attendanceDate:  {
     attendanceDateId: string,
@@ -24,6 +27,16 @@ type StatusComboboxProps = {
     status: string
   }[]
 }
+
+const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
+
+const UpdateSchema = z.object({
+  attendanceDateId: z.string().min(1, "Attendance Date ID is required"),
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+  status: z.enum(StatusValues, {
+    errorMap: () => ({ message: "Invalid status" })
+  })
+})
 
 const frameworks = [
   {
@@ -64,12 +77,7 @@ export function StatusCombobox({ attendanceDate }: StatusComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("");
 
-  /* 
-    take date now
-    loop through attendanceDate to find the date now
-    if so take take the status
-    then update the status
-  */
+  const [updateAttendance, {isLoading}] = useUpdateAttendanceMutation()
 
   React.useEffect(() => {
     const dateNow = new Date();
@@ -78,7 +86,30 @@ export function StatusCombobox({ attendanceDate }: StatusComboboxProps) {
     const attendance = attendanceDate.filter(attendance => attendance.date === currentDate);
 
     setValue(attendance[0]?.status);
-  }, [attendanceDate])
+  }, [attendanceDate]);
+
+
+  const handleOnSelect = async() => {
+    try {
+        const updatedAttendance = await updateAttendance({
+          attendanceDateId: attendanceDate.attendanceDateId,
+          date: attendanceDate.date,
+          status: value
+        }).unwrap();
+
+        const result = UpdateSchema.safeParse(updatedAttendance);
+
+        if(result.success) {
+          console.log("UPDATED ATTENDANCE:", result)
+        } else if (result.error) {
+          console.log("ERROR:", result.error)
+        }
+        
+        
+      } catch (error) {
+        console.error(error)
+      }
+  }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -108,6 +139,8 @@ export function StatusCombobox({ attendanceDate }: StatusComboboxProps) {
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false);
+
+                    handleOnSelect()
                   }}
                 >
                   {framework.label}
