@@ -8,7 +8,7 @@ type studentsData = {
     createdAt: string,
     updatedAt: string,
     accountId: string,
-    grade: string,
+    grade: number,
     section: string,
     batch: string,
     attendanceDate: {
