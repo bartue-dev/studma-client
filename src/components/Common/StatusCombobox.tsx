@@ -17,25 +17,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { useUpdateAttendanceMutation } from "@/features/Attendance/AttendanceApiSlice"
+import { useAddAttendanceMutation, useUpdateAttendanceMutation } from "@/features/Attendance/AttendanceApiSlice"
 import z from "zod"
 
 type StatusComboboxProps = {
+  studentId: string | null,
   attendanceDate:  {
-    attendanceDateId: string,
-    date: string,
-    status: string
+    attendanceDateId: string | null,
+    date: string | null,
+    status: string | null
   }[]
 }
 
 const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
 
 const UpdateSchema = z.object({
-  attendanceDateId: z.string().min(1, "Attendance Date ID is required"),
+  attendanceDateId: z.string(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  status: z.enum(StatusValues, {
-    errorMap: () => ({ message: "Invalid status" })
-  })
+  status: z.enum(StatusValues, "Invalid Status")
 })
 
 const frameworks = [
@@ -58,7 +57,7 @@ const frameworks = [
 ]
 
 // Helper function to get status styling
-const getStatusStyling = (status: string) => {
+const getStatusStyling = (status: string | null | undefined) => {
   switch (status) {
     case "PRESENT":
       return "bg-green-500 text-white hover:bg-green-500 hover:-translate-y-0.5 transition-all duration-150 hover:text-white";
@@ -73,37 +72,56 @@ const getStatusStyling = (status: string) => {
   }
 }
 
-export function StatusCombobox({ attendanceDate }: StatusComboboxProps) {
+export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProps) {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState<string | null | undefined>(null);
 
-  const [updateAttendance, {isLoading}] = useUpdateAttendanceMutation()
+  const [updateAttendance] = useUpdateAttendanceMutation()
+  const [addAttendance] = useAddAttendanceMutation();
 
   React.useEffect(() => {
+    console.log(attendanceDate.attendanceDateId)
     const dateNow = new Date();
     const currentDate = format(dateNow, "yyyy-MM-dd");
 
-    const attendance = attendanceDate.filter(attendance => attendance.date === currentDate);
+    const attendance = attendanceDate.find(attendance => attendance.date === currentDate);
 
-    setValue(attendance[0]?.status);
+    setValue(attendance?.status);
+
   }, [attendanceDate]);
 
 
-  const handleOnSelect = async() => {
+  const handleOnSelect = async(newStatus: string) => {
+
+    const dateNow = new Date().toISOString();
+    const currentDate = format(dateNow, "yyyy-MM-dd");
+
     try {
-        const updatedAttendance = await updateAttendance({
-          attendanceDateId: attendanceDate.attendanceDateId,
-          date: attendanceDate.date,
-          status: value
+      let attendanceData;
+
+      if (attendanceDate.length <= 0) {
+        attendanceData = await addAttendance({
+          studentId: studentId,
+          date: currentDate,
+          status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
         }).unwrap();
+      } else {
+        attendanceData = await updateAttendance({
+          attendanceDateId: attendanceDate.attendanceDateId,
+          date: currentDate,
+          status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
+        }).unwrap();
+      }
 
-        const result = UpdateSchema.safeParse(updatedAttendance);
+      console.log("Attendance:", attendanceData)
 
-        if(result.success) {
-          console.log("UPDATED ATTENDANCE:", result)
-        } else if (result.error) {
-          console.log("ERROR:", result.error)
-        }
+      const result = UpdateSchema.safeParse(attendanceData);
+
+      if(result.success) {
+        console.log("UPDATED ATTENDANCE:", result)
+      } else if (result.error) {
+        console.log("ERROR:", result.error)
+      }
         
         
       } catch (error) {
@@ -137,10 +155,11 @@ export function StatusCombobox({ attendanceDate }: StatusComboboxProps) {
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue)
+                    const newValue = currentValue === value ? "" : currentValue
+                    setValue(newValue)
                     setOpen(false);
 
-                    handleOnSelect()
+                    handleOnSelect(newValue)
                   }}
                 >
                   {framework.label}
