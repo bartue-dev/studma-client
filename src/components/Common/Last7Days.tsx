@@ -3,9 +3,9 @@ import { Check, X, ClockAlert, Handshake, Ellipsis  } from "lucide-react";
 
 type AttendanceDateType = {
   attendanceDate: {
-    attendanceDateId: string,
-    date: string,
-    status: string
+    attendanceDateId: string | null,
+    date: string | null,
+    status: string | null
   }[]
 }
 
@@ -29,8 +29,6 @@ export default function LastSevenDays({ attendanceDate }: AttendanceDateType) {
     }
     return dates.reverse(); // Reverse to get chronological order (oldest to newest)
   } 
-
-  console.log(getLast7Days())
 
   return (
     <div>
