@@ -15,6 +15,12 @@ import { StatusCombobox } from "@/components/Common/StatusCombobox"
 
 import LastSevenDays from "@/components/Common/Last7Days";
 
+import { useAppDispatch } from "@/features/hooks";
+import { addStudentData } from "@/features/Student/StudentSlice";
+import { useAppSelector } from "@/features/hooks";
+import { studentDataSlice } from "@/features/Student/StudentSlice";
+import { useEffect } from "react";
+
 
 export default function Attendance() {
   const {
@@ -24,10 +30,16 @@ export default function Attendance() {
     isError,
     error
   } = useGetAllStudentsQuery();
+  const dispatch = useAppDispatch();
+  const students = useAppSelector(studentDataSlice)
 
-  if (isError) {
-    console.log(error)
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(addStudentData(studentsData?.studentData))
+    } else if (isError) {
+      console.log(error)
+    }
+  })
 
   return (
     <div className="h-full">
@@ -52,7 +64,7 @@ export default function Attendance() {
                   </TableCell>
                 </TableRow>
               : isSuccess
-              && studentsData?.studentData.map(student => (
+              && students?.studentData.map(student => (
                   <TableRow key={student.studentId}>
                     <TableCell 
                       className="font-medium"
@@ -67,6 +79,7 @@ export default function Attendance() {
                     <TableCell>
                     <StatusCombobox 
                       attendanceDate={student?.attendanceDate}
+                      studentId={student?.studentId}
                       />
                     </TableCell>
                   </TableRow>
