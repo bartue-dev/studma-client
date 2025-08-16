@@ -33,25 +33,10 @@ const studentSlice = createSlice({
     addStudentData: (state, action: PayloadAction<StudentDataType[]>) => {
       state.studentData = action.payload
     },
-
-    updateStudentData: (state, action) => {
-      const index = state.studentData.findIndex(data => data.studentId === action.payload.studentId);
-
-      if (index !== -1) {
-        state.studentData[index] = {
-          ...action.payload,
-          attendanceDate: {
-            attendanceDateId: action.payload.attendanceDateId,
-            date: action.payload.date,
-            status: action.payload.status
-          }
-        } 
-      }
-    },
   }
 })
 
-export const { addStudentData, updateStudentData } = studentSlice.actions;
+export const { addStudentData } = studentSlice.actions;
 
 export default studentSlice.reducer 
 
