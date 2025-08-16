@@ -22,6 +22,7 @@ import { studentDataSlice } from "@/features/Student/StudentSlice";
 import { useEffect } from "react";
 
 
+//Attendance component
 export default function Attendance() {
   const {
     data: studentsData,
@@ -39,7 +40,7 @@ export default function Attendance() {
     } else if (isError) {
       console.log(error)
     }
-  })
+  },[dispatch, error , isError, isSuccess, studentsData])
 
   return (
     <div className="h-full">
@@ -59,7 +60,7 @@ export default function Attendance() {
           <TableBody>
             {isLoading
               ? <TableRow>
-                  <TableCell colSpan={6} className="text-center py-8 justify-items-center">
+                  <TableCell colSpan={5} className="text-center py-8 justify-items-center">
                     <BeatLoader color="#5e9fe3"/>
                   </TableCell>
                 </TableRow>
