@@ -1,5 +1,4 @@
 import { ListChecks , GraduationCap , LogOut, NotebookText   } from "lucide-react"
-
 import { Link, useLocation } from "react-router-dom"
 
 import {
@@ -14,9 +13,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-import { useLogoutMutation } from "@/features/Auth/authApiSlice";
-import { useAppDispatch } from "@/features/hooks";
-import { logOut } from "@/features/Auth/authSlice";
+import useLogout from "@/hooks/useLogout";
 
 // Menu items.
 const items = [
@@ -33,16 +30,9 @@ const items = [
 ]
 
 export function AppSidebar() {
-  const [logout] = useLogoutMutation();
-  const dispatch = useAppDispatch();
   const pathname = useLocation().pathname;
-
-
-  const handleLogout = async () => {
-    await logout(undefined);
-    dispatch(logOut());
-  }
-
+  const handleLogout = useLogout();
+  
   return (
     <Sidebar>
       <SidebarHeader 
