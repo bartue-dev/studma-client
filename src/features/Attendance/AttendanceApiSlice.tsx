@@ -2,30 +2,28 @@
 
   type AddAttendanceResponse = {
     attendanceData: {
-      attendanceDateId: string,
-      date: string,
+      attendanceDateId: string | null,
+      date: string | null,
       status: "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
     }[]
   }
 
   type AddAttendanceArgs = {
     studentId: string | null,
-    date: string,
+    date: string | null,
     status: "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
   }
 
   type updateAttendanceResponse = {
     attendanceDate: {
-      attendanceDateId: string,
-      date: string,
+      attendanceDateId: string | null,
       status: "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
     }[]
   }
 
   type UpdateAttendanceArgs = {
-    attendanceDateId: string,
-    date: string,
-    status: string
+    attendanceDateId: string | null | undefined,
+    status: "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
   }
 
 
@@ -39,15 +37,17 @@
             date: data.date,
             status: data.status
           }
-        })
+        }),
+        invalidatesTags: ["Students"]
       }),
 
       updateAttendance: builder.mutation<updateAttendanceResponse, UpdateAttendanceArgs>({
-        query: ({attendanceDateId, date, status}) => ({
+        query: ({attendanceDateId, status}) => ({
           url: `/v1/attendanceDate/${attendanceDateId}`,
           method: "PUT",
-          body: {date, status}
-        })
+          body: { status }
+        }),
+        invalidatesTags: ["Students"]
       })
     })
   })
