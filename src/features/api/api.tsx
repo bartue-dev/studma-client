@@ -24,7 +24,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
   console.log("REAUTH",result)
 
-  if (result?.error?.status === 403) {
+  if (result?.error?.status === 401) {
     console.log("sending refresh token")
     //send refresh token to get new access token
     const refreshResult = await baseQuery("/v1/refreshToken", api, extraOptions)
@@ -54,6 +54,6 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User"],
+  tagTypes: ["User", "Students"],
   endpoints: builder => ({})
 })
