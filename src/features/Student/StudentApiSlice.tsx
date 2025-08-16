@@ -23,7 +23,8 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getAllStudents: builder.query<studentsData, void>({
       query: () => "/v1/students",
-      keepUnusedDataFor: 60
+      keepUnusedDataFor: 60,
+      providesTags: ['Students']
     })
   })
 })
