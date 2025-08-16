@@ -32,9 +32,15 @@ type StatusComboboxProps = {
 const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
 
 const UpdateSchema = z.object({
-  attendanceDateId: z.string(),
-  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-  status: z.enum(StatusValues, "Invalid Status")
+  message: z.string(),
+  status: z.string(),
+  attendanceDate: z.object({
+    accountId: z.string(),
+    studentId: z.string(),
+    attendanceDateId: z.string(),
+    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+    status: z.enum(StatusValues, "Invalid Status")
+  }).optional()
 })
 
 const frameworks = [
@@ -72,6 +78,7 @@ const getStatusStyling = (status: string | null | undefined) => {
   }
 }
 
+//statusCombobox component
 export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState<string | null | undefined>(null);
@@ -80,7 +87,6 @@ export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProp
   const [addAttendance] = useAddAttendanceMutation();
 
   React.useEffect(() => {
-    console.log(attendanceDate.attendanceDateId)
     const dateNow = new Date();
     const currentDate = format(dateNow, "yyyy-MM-dd");
 
@@ -88,41 +94,45 @@ export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProp
 
     setValue(attendance?.status);
 
-  }, [attendanceDate]);
+  }, [attendanceDate, value]);
 
 
   const handleOnSelect = async(newStatus: string) => {
-
-    const dateNow = new Date().toISOString();
+    const dateNow = new Date();
     const currentDate = format(dateNow, "yyyy-MM-dd");
+    const attendance = attendanceDate.find(attendance => attendance.date === currentDate);
+
 
     try {
       let attendanceData;
 
-      if (attendanceDate.length <= 0) {
+      if (value === null || value === undefined) {
+        console.log("ADD ATTENDANCE")
         attendanceData = await addAttendance({
           studentId: studentId,
           date: currentDate,
           status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
         }).unwrap();
+
       } else {
+        console.log("UPDATE ATTENDANCE")
         attendanceData = await updateAttendance({
-          attendanceDateId: attendanceDate.attendanceDateId,
-          date: currentDate,
+          attendanceDateId: attendance?.attendanceDateId,
           status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
         }).unwrap();
       }
 
-      console.log("Attendance:", attendanceData)
-
       const result = UpdateSchema.safeParse(attendanceData);
 
+      console.log(attendanceData)
+
       if(result.success) {
-        console.log("UPDATED ATTENDANCE:", result)
+        console.log("UPDATED ATTENDANCE:", result.data)
+        return
       } else if (result.error) {
         console.log("ERROR:", result.error)
+        return null
       }
-        
         
       } catch (error) {
         console.error(error)
