@@ -8,9 +8,6 @@ import Register from "./components/Auth/Register";
 import Attendance from "./Pages/Attendance";
 import NotFoundPage from "./components/Common/404Error";
 import Students from "./Pages/Students";
-import Batch from "./Pages/Batch";
-import Course from "./Pages/Course";
-import Section from "./Pages/Section";
 
 export const router = createBrowserRouter([
   {
@@ -28,10 +25,6 @@ export const router = createBrowserRouter([
                   {index: true, element: <Attendance/>},
                   {path: "attendance", element: <Attendance/>},
                   {path: "students", element: <Students/>},
-                  {path: "batch", element: <Batch/>},
-                  {path: "course", element: <Course/>},
-                  {path: "section", element: <Section/>},
-
                 ]
               }
             ]
