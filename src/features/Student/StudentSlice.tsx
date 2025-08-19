@@ -41,3 +41,5 @@ export const { addStudentData } = studentSlice.actions;
 export default studentSlice.reducer 
 
 export const studentDataSlice = (state: RootState) => state.student 
+export const studentGradeSlice 
+  = (state: RootState) => state.student.studentData.map(student => student.grade)
