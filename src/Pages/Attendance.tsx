@@ -20,6 +20,8 @@ import { addStudentData } from "@/features/Student/StudentSlice";
 import { useAppSelector } from "@/features/hooks";
 import { studentDataSlice } from "@/features/Student/StudentSlice";
 import { useEffect } from "react";
+import { format } from "date-fns";
+import FilterInputs from "@/components/Common/FilterInputs";
 
 
 //Attendance component
@@ -44,7 +46,10 @@ export default function Attendance() {
 
   return (
     <div className="h-full">
-      <h1 className="mb-8 text-3xl text-gray-800 font-semibold">Daily attendance</h1>
+      <div className="mb-8 flex items-center gap-5">
+        <h1 className="text-3xl text-gray-800 font-semibold">Daily attendance:</h1>
+         <FilterInputs/> 
+      </div>
       <div className="border shadow-sm bg-white p-3 rounded-md">
         <Table className="w-full h-full">
           <TableCaption>List of Students</TableCaption>
@@ -53,8 +58,8 @@ export default function Attendance() {
               <TableHead>STUDENT NAME</TableHead>
               <TableHead className="text-center">GRADE</TableHead>
               <TableHead className="text-center">SECTION</TableHead>
-              <TableHead>PREVIOUS 7 DAYS STATUS</TableHead>
-              <TableHead>STATUS</TableHead>
+              <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "MMMM")})</TableHead>
+              <TableHead>STATUS ({format(new Date(), "MMM-dd")})</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
