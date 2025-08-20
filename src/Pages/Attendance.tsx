@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -10,39 +9,23 @@ import {
 
 import { BeatLoader } from "react-spinners";
 
-import { useGetAllStudentsQuery } from "@/features/Student/StudentApiSlice"
+import useStudentData from "@/hooks/useStudentData";
 import { StatusCombobox } from "@/components/Common/StatusCombobox"
 
 import LastSevenDays from "@/components/Common/Last7Days";
 
-import { useAppDispatch } from "@/features/hooks";
-import { addStudentData } from "@/features/Student/StudentSlice";
-import { useAppSelector } from "@/features/hooks";
-import { studentDataSlice } from "@/features/Student/StudentSlice";
-import { useEffect } from "react";
 import { format } from "date-fns";
 import FilterInputs from "@/components/Common/FilterInputs";
-
 
 //Attendance component
 export default function Attendance() {
   const {
-    data: studentsData,
+    students,
     isSuccess,
     isLoading,
     isError,
-    error
-  } = useGetAllStudentsQuery();
-  const dispatch = useAppDispatch();
-  const students = useAppSelector(studentDataSlice)
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(addStudentData(studentsData?.studentData))
-    } else if (isError) {
-      console.log(error)
-    }
-  },[dispatch, error , isError, isSuccess, studentsData])
+    apiError
+  } = useStudentData();
 
   return (
     <div className="h-full">
@@ -50,9 +33,11 @@ export default function Attendance() {
         <h1 className="text-3xl text-gray-800 font-semibold">Daily attendance:</h1>
          <FilterInputs/> 
       </div>
-      <div className="border shadow-sm bg-white p-3 rounded-md">
-        <Table className="w-full h-full">
-          <TableCaption>List of Students</TableCaption>
+      <div 
+        className="border shadow-sm bg-white p-3 rounded-md h-[500px] overflow-auto"
+        style={{ scrollbarWidth: "thin" }}
+      >
+        <Table className="w-full">
           <TableHeader>
             <TableRow>
               <TableHead>STUDENT NAME</TableHead>
@@ -69,6 +54,12 @@ export default function Attendance() {
                     <BeatLoader color="#5e9fe3"/>
                   </TableCell>
                 </TableRow>
+              :isError
+              ? <TableRow>
+                <TableCell colSpan={5} className="text-center py-8 text-red-500">
+                  {apiError.data.message}
+                </TableCell>
+              </TableRow>
               : isSuccess
               && students?.studentData.map(student => (
                   <TableRow key={student.studentId}>
