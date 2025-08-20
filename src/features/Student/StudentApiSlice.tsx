@@ -55,7 +55,8 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
         url: "/v1/students",
         method: "POST",
         body: {...data}
-      })
+      }),
+      invalidatesTags: ["Students"]
     }),
   })
 })
