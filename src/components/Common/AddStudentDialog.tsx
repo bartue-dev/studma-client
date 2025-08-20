@@ -16,6 +16,7 @@ import { useAddStudentMutation } from "@/features/Student/StudentApiSlice";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod"
+import { useState } from "react";
 
 const AddStudentSchema = z.object({
   firstname: z.string("Firstname must be a string").min(2, "Firstname must be atleast 2 or more characters"),
@@ -29,28 +30,55 @@ type AddStudentData = z.infer<typeof AddStudentSchema>
 
 //AddStudentDialog component
 export default function AddStudentDialog() {
-  const { register, handleSubmit, formState: {errors}, reset} = useForm<AddStudentData>({resolver: zodResolver(AddStudentSchema)});
+  const [open,setOpen] = useState(false);
+  const [serverError, setServerError] = useState<{error?: string}>({})
+  const { 
+    register,
+    handleSubmit,
+    formState: {errors},
+    reset
+  } = useForm<AddStudentData>({
+    resolver: zodResolver(AddStudentSchema)
+  });
+
   const [addStudent, {isLoading}] = useAddStudentMutation();
 
   const onSubmit = async(data: AddStudentData) => {
     console.log("GRADE", data.grade)
     try {
-      const student = await addStudent({
+      await addStudent({
         firstname: data.firstname,
         lastname: data.lastname,
         grade: Number(data.grade),
         section: data.section,
         batch: data.batch
-      });
+      }).unwrap();
 
-      console.log("ADDED STUDENT", student)
-    } catch (error) {
-      console.error(error)
+        setOpen(false)
+    } catch (err) {
+      console.error("catch error",err)
+
+      const error = err as {status: number, data: { message: string}}
+      const serveError = {} as { error: string }
+
+      if (!error?.status) {
+        serveError.error = "No server response"
+      } else if (error?.data?.message.split(":")[0] === "P2002") {
+        serveError.error = "Student already exist"
+      } else if (error?.status === 400) {
+        serveError.error = "Failed to add a student"
+      } else {
+        serveError.error = "Failed"
+      }
+
+      if (Object.keys(serveError).length > 0) {
+        setServerError(serveError)
+      }
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button 
         variant="outline"
@@ -66,6 +94,7 @@ export default function AddStudentDialog() {
             <DialogTitle className="text-2xl">Add Student</DialogTitle>
           </DialogHeader>
           <div className="grid gap-2 mt-5">
+            <p className="text-sm text-red-600">{serverError?.error}</p>
             <div className="grid gap-1">
               <label htmlFor="firstname">Firstname</label>
               <Input 
