@@ -11,10 +11,10 @@ export default function Home() {
   return(
     <div className="font-Sans h-screen">
       <SidebarLayout>
-        <div className="flex flex-col h-full bg-gray-50">
+        <div className="flex flex-col h-full bg-gray-50 relative">
 
           {/* header */}
-          <div className="h-16 px-10 place-self-end content-center">
+          <div className="h-16 px-10 content-center absolute top-0 right-0">
             <div className="flex items-center gap-3 ">
               <span>Hi, Teacher {fullname?.split(" ")[0]}</span>
               <User size={25} className="text-gray-500"/>
@@ -22,7 +22,7 @@ export default function Home() {
           </div>
 
           {/* content */}
-          <div className="flex-1 p-8">
+          <div className="flex-1 p-8 mt-8">
             <Outlet/>
           </div>
         </div>
