@@ -15,7 +15,6 @@ import { StatusCombobox } from "@/components/Common/StatusCombobox"
 import LastSevenDays from "@/components/Common/Last7Days";
 
 import { format } from "date-fns";
-import FilterInputs from "@/components/Common/FilterInputs";
 
 //Attendance component
 export default function Attendance() {
@@ -29,10 +28,7 @@ export default function Attendance() {
 
   return (
     <div className="h-full">
-      <div className="mb-8 flex items-center gap-5">
-        <h1 className="text-3xl text-gray-800 font-semibold">Daily attendance:</h1>
-         <FilterInputs/> 
-      </div>
+        <h1 className="text-3xl text-gray-800 font-semibold mb-8">Daily attendance:</h1>
       <div 
         className="border shadow-sm bg-white p-3 rounded-md h-[500px] overflow-auto"
         style={{ scrollbarWidth: "thin" }}
@@ -40,7 +36,7 @@ export default function Attendance() {
         <Table className="w-full">
           <TableHeader>
             <TableRow>
-              <TableHead>STUDENT NAME</TableHead>
+              <TableHead className="w-[200px]">STUDENT NAME</TableHead>
               <TableHead className="text-center">GRADE</TableHead>
               <TableHead className="text-center">SECTION</TableHead>
               <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "MMMM")})</TableHead>
