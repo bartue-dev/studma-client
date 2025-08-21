@@ -11,6 +11,8 @@ type studentsData = {
     grade: number,
     section: string,
     batch: string,
+    totalAbsent: number,
+    totalPresent: number,
     attendanceDate: {
       attendanceDateId: string,
       date: string,
