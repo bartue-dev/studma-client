@@ -67,8 +67,16 @@ export default function Students() {
                   <TableCell className="font-medium">{student.firstname} {student.lastname}</TableCell>
                   <TableCell className="text-center">{student.grade}</TableCell>
                   <TableCell className="text-center">{student.section}</TableCell>
-                  <TableCell className="text-center">test</TableCell>
-                  <TableCell className="text-center">test</TableCell>
+                  <TableCell 
+                    className="text-center font-semibold text-red-500"
+                    >
+                      {student.totalAbsent.toString().padStart(2, "0")}
+                    </TableCell>
+                  <TableCell 
+                    className="text-center font-semibold text-green-600"
+                    >
+                      {student.totalPresent.toString().padStart(2, "0")}
+                    </TableCell>
                   <TableCell className="text-right cursor-pointer">
                     <Ellipsis />
                   </TableCell>
