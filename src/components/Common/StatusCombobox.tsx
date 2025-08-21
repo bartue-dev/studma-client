@@ -66,15 +66,15 @@ const frameworks = [
 const getStatusStyling = (status: string | null | undefined) => {
   switch (status) {
     case "PRESENT":
-      return "bg-green-500 text-white hover:bg-green-500 hover:-translate-y-0.5 transition-all duration-150 hover:text-white";
+      return "bg-green-500 text-white hover:bg-green-500 hover:text-white";
     case "ABSENT":
-      return "bg-red-500 text-white hover:bg-red-500 hover:-translate-y-0.5 transition-all duration-150 hover:text-white";
+      return "bg-red-500 text-white hover:bg-red-500 hover:text-white";
     case "LATE":
-      return "bg-yellow-500 text-white hover:bg-yellow-500 hover:-translate-y-0.5 transition-all duration-150 hover:text-white";
+      return "bg-yellow-500 text-white hover:bg-yellow-500 hover:text-white";
     case "EXCUSE":
-      return "bg-blue-500 text-white hover:bg-blue-500 hover:-translate-y-0.5 transition-all duration-150 hover:text-white";
+      return "bg-blue-500 text-white hover:bg-blue-500 hover:text-white";
     default:
-      return "hover:bg-gray-100 hover:shadow-md hover:border-gray-300 transition-all duration-200";
+      return "hover:bg-gray-100 hover:shadow-md hover:text-white";
   }
 }
 
