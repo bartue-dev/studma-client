@@ -15,20 +15,25 @@ import { StatusCombobox } from "@/components/Common/StatusCombobox"
 import LastSevenDays from "@/components/Common/Last7Days";
 
 import { format } from "date-fns";
+import { GradeDropDown } from "@/components/Common/GradeDropdown";
+import { useState } from "react";
+import { SectionDropDown } from "@/components/Common/SectionDropDown";
 
 //Attendance component
 export default function Attendance() {
+  const [selectGrade, setSelectGrade] = useState(0);
+  const [selectSection, setSelectSection] = useState("");
   const {
     students,
     isSuccess,
     isLoading,
     isError,
     apiError
-  } = useStudentData();
+  } = useStudentData(selectGrade, selectSection);
 
   return (
     <div className="h-full">
-        <h1 className="text-3xl text-gray-800 font-semibold mb-8">Daily attendance:</h1>
+        <h1 className="text-3xl text-gray-800 font-semibold mb-8">Attendance</h1>
       <div 
         className="border shadow-sm bg-white p-3 rounded-md h-[500px] overflow-auto"
         style={{ scrollbarWidth: "thin" }}
@@ -37,8 +42,22 @@ export default function Attendance() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[200px]">STUDENT NAME</TableHead>
-              <TableHead className="text-center">GRADE</TableHead>
-              <TableHead className="text-center">SECTION</TableHead>
+              <TableHead>
+                <div className="flex items-center justify-center gap-2">
+                  <span>GRADE</span>
+                  <GradeDropDown
+                    setSelectGrade={setSelectGrade}
+                  />
+                </div>
+              </TableHead>
+              <TableHead>
+                <div className="flex items-center justify-center gap-2">
+                  <span>SECTION</span>
+                  <SectionDropDown
+                    setSelectSection={setSelectSection}
+                  />  
+                </div>
+              </TableHead>
               <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "MMMM")})</TableHead>
               <TableHead>STATUS ({format(new Date(), "MMM-dd")})</TableHead>
             </TableRow>
@@ -57,7 +76,7 @@ export default function Attendance() {
                 </TableCell>
               </TableRow>
               : isSuccess
-              && students?.studentData.map(student => (
+              && students?.map(student => (
                   <TableRow key={student.studentId}>
                     <TableCell 
                       className="font-medium"
