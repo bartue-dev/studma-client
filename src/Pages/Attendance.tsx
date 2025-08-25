@@ -18,22 +18,32 @@ import { format } from "date-fns";
 import { GradeDropDown } from "@/components/Common/GradeDropdown";
 import { useState } from "react";
 import { SectionDropDown } from "@/components/Common/SectionDropDown";
+import { AttendanceDatePicker } from "@/components/Common/AttendanceDatePicker";
 
 //Attendance component
 export default function Attendance() {
   const [selectGrade, setSelectGrade] = useState(0);
   const [selectSection, setSelectSection] = useState("");
+  const [selectDate, setSelectDate] = useState<Date | undefined>(undefined)
   const {
     students,
     isSuccess,
     isLoading,
     isError,
     apiError
-  } = useStudentData(selectGrade, selectSection);
+  } = useStudentData(selectGrade, selectSection, selectDate);
+
+  console.log("STUDENTS", students)
 
   return (
     <div className="h-full">
-        <h1 className="text-3xl text-gray-800 font-semibold mb-8">Attendance</h1>
+      <div className="flex items-center gap-5 mb-8">
+        <h1 className="text-3xl text-gray-800 font-semibold">Attendance:</h1>
+        <AttendanceDatePicker
+          date={selectDate}
+          setDate={setSelectDate}
+        />
+      </div>
       <div 
         className="border shadow-sm bg-white p-3 rounded-md h-[500px] overflow-auto"
         style={{ scrollbarWidth: "thin" }}
@@ -58,8 +68,13 @@ export default function Attendance() {
                   />  
                 </div>
               </TableHead>
-              <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "MMMM")})</TableHead>
-              <TableHead>STATUS ({format(new Date(), "MMM-dd")})</TableHead>
+              <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "yyyy")})</TableHead>
+              <TableHead>
+                STATUS 
+                ({selectDate 
+                  ? format(selectDate, "MMM-dd") 
+                  : format(new Date(), "MMM-dd")})
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -92,6 +107,7 @@ export default function Attendance() {
                     <StatusCombobox 
                       attendanceDate={student?.attendanceDate}
                       studentId={student?.studentId}
+                      date={selectDate}
                       />
                     </TableCell>
                   </TableRow>
