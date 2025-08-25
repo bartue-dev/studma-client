@@ -35,6 +35,7 @@ export function SectionDropDown({ setSelectSection }: PropsTypes) {
       >
         <Button 
           variant="ghost"
+          className="cursor-pointer"
         >
           <ChevronDown/>
         </Button>
