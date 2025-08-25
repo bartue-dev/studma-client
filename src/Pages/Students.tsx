@@ -59,7 +59,7 @@ export default function Students() {
                   </TableCell>
                 </TableRow>
               : isSuccess
-              && students?.studentData.map((student) => (
+              && students?.map((student) => (
                 <TableRow 
                   key={student.studentId}
                   className="h-15"
