@@ -20,13 +20,15 @@ import {
 import { useAddAttendanceMutation, useUpdateAttendanceMutation } from "@/features/Attendance/AttendanceApiSlice"
 import z from "zod"
 
+
 type StatusComboboxProps = {
   studentId: string | null,
   attendanceDate:  {
     attendanceDateId: string | null,
     date: string | null,
     status: string | null
-  }[]
+  }[],
+  date: Date | undefined
 }
 
 const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
@@ -79,7 +81,7 @@ const getStatusStyling = (status: string | null | undefined) => {
 }
 
 //statusCombobox component
-export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProps) {
+export function StatusCombobox({ studentId, attendanceDate, date }: StatusComboboxProps) {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState<string | null | undefined>(null);
 
@@ -88,13 +90,14 @@ export function StatusCombobox({ studentId, attendanceDate }: StatusComboboxProp
 
   React.useEffect(() => {
     const dateNow = new Date();
-    const currentDate = format(dateNow, "yyyy-MM-dd");
-
-    const attendance = attendanceDate.find(attendance => attendance.date === currentDate);
-
+    const targetDate = date ? format(date, "yyyy-MM-dd") :format(dateNow, "yyyy-MM-dd");
+    
+    const attendance = attendanceDate.find(attendance => attendance.date === targetDate);
+    
     setValue(attendance?.status);
+    console.log("VALUE:", value)
 
-  }, [attendanceDate, value]);
+  }, [attendanceDate, value, date]);
 
 
   const handleOnSelect = async(newStatus: string) => {
