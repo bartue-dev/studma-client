@@ -35,6 +35,7 @@ export function GradeDropDown({ setSelectGrade }: PropsTypes) {
       >
         <Button 
           variant="ghost"
+          className="cursor-pointer"
         >
           <ChevronDown/>
         </Button>
