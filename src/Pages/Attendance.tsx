@@ -31,9 +31,9 @@ export default function Attendance() {
     isLoading,
     isError,
     apiError
-  } = useStudentData(selectGrade, selectSection, selectDate);
+  } = useStudentData({selectGrade, selectSection, selectDate});
 
-  console.log("STUDENTS", students)
+  // console.log("STUDENTS", students)
 
   return (
     <div className="h-full">
@@ -68,7 +68,7 @@ export default function Attendance() {
                   />  
                 </div>
               </TableHead>
-              <TableHead>PREVIOUS 7 DAYS STATUS ({format(new Date(), "yyyy")})</TableHead>
+              <TableHead>PREVIOUS 7 DAYS STATUS</TableHead>
               <TableHead>
                 STATUS 
                 ({selectDate 
