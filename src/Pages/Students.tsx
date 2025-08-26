@@ -8,24 +8,42 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { Input } from "@/components/ui/input";
+
 import { BeatLoader } from "react-spinners";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, Search } from "lucide-react";
 
 import useStudentData from "@/hooks/useStudentData";
+import { useState, /* type FormEvent */ } from "react";
 
 export default function Students() {
+  const [studentName, setStudentName] = useState("")
   const { 
     students,
     isSuccess,
     isLoading,
     isError,
     apiError
-  } = useStudentData();
+  } = useStudentData({studentName});
 
-  console.log("STUDENTS COMPONENT",students)
+  console.log("STUDENTS", students)
+
 
   return (
-    <div>
+    <div className="relative">
+      <form 
+        className="w-[250px] relative -top-11"
+      >
+        <Search className="text-gray-500 absolute left-2 top-1.5 w-5"/>
+        <Input
+          type="text"
+          name="search"
+          placeholder="search student"
+          className="bg-white pl-8"
+          onChange={(e) => setStudentName(e.target.value)}
+        />
+      </form>
+
       <div className="flex items-center gap-3 mb-8">
         <h1 className="text-3xl text-gray-800 font-semibold">Students:</h1>
         <AddStudentDialog/>
