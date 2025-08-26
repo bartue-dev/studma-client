@@ -18,7 +18,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function SectionDropDown({ setSelectSection }: PropsTypes) {
-  const {students} = useStudentData()
+  const {students} = useStudentData({})
   const [section, setSection] = useState<string[]>([])
 
   useEffect(() => {
