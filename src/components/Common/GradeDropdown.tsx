@@ -18,7 +18,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function GradeDropDown({ setSelectGrade }: PropsTypes) {
-  const {students} = useStudentData()
+  const {students} = useStudentData({})
   const [grade, setGrade] = useState<number[]>([])
 
   useEffect(() => {
