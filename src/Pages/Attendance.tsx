@@ -12,13 +12,13 @@ import { BeatLoader } from "react-spinners";
 import useStudentData from "@/hooks/useStudentData";
 import { StatusCombobox } from "@/components/Common/StatusCombobox"
 
-import LastSevenDays from "@/components/Common/Last7Days";
+import LastSevenDays from "@/components/Common/AttendancePage/Last7Days";
 
 import { format } from "date-fns";
-import { GradeDropDown } from "@/components/Common/GradeDropdown";
+import { GradeDropDown } from "@/components/Common/AttendancePage/GradeDropdown";
 import { useState } from "react";
-import { SectionDropDown } from "@/components/Common/SectionDropDown";
-import { AttendanceDatePicker } from "@/components/Common/AttendanceDatePicker";
+import { SectionDropDown } from "@/components/Common/AttendancePage/SectionDropDown";
+import { AttendanceDatePicker } from "@/components/Common/AttendancePage/AttendanceDatePicker";
 
 //Attendance component
 export default function Attendance() {
