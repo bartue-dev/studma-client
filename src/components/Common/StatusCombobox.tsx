@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/popover"
 
 import { useAddAttendanceMutation, useUpdateAttendanceMutation } from "@/features/Attendance/AttendanceApiSlice"
-import z from "zod"
+// import z from "zod"
 
 
 type StatusComboboxProps = {
@@ -31,19 +31,19 @@ type StatusComboboxProps = {
   date: Date | undefined
 }
 
-const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
+// const StatusValues = ["PRESENT", "ABSENT", "LATE", "EXCUSE"] as const;
 
-const UpdateSchema = z.object({
-  message: z.string(),
-  status: z.string(),
-  attendanceDate: z.object({
-    accountId: z.string(),
-    studentId: z.string(),
-    attendanceDateId: z.string(),
-    date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
-    status: z.enum(StatusValues, "Invalid Status")
-  }).optional()
-})
+// const UpdateSchema = z.object({
+//   message: z.string(),
+//   status: z.string(),
+//   attendanceDate: z.object({
+//     accountId: z.string(),
+//     studentId: z.string(),
+//     attendanceDateId: z.string(),
+//     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Date must be in YYYY-MM-DD format"),
+//     status: z.enum(StatusValues, "Invalid Status")
+//   }).optional()
+// })
 
 const frameworks = [
   {
@@ -95,7 +95,6 @@ export function StatusCombobox({ studentId, attendanceDate, date }: StatusCombob
     const attendance = attendanceDate.find(attendance => attendance.date === targetDate);
     
     setValue(attendance?.status);
-    console.log("VALUE:", value)
 
   }, [attendanceDate, value, date]);
 
@@ -107,36 +106,21 @@ export function StatusCombobox({ studentId, attendanceDate, date }: StatusCombob
 
 
     try {
-      let attendanceData;
 
       if (value === null || value === undefined) {
-        console.log("ADD ATTENDANCE")
-        attendanceData = await addAttendance({
+        await addAttendance({
           studentId: studentId,
           date: currentDate,
           status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
         }).unwrap();
 
       } else {
-        console.log("UPDATE ATTENDANCE")
-        attendanceData = await updateAttendance({
+        await updateAttendance({
           attendanceDateId: attendance?.attendanceDateId,
           status: newStatus as "PRESENT" | "ABSENT" | "LATE" | "EXCUSE"
         }).unwrap();
       }
 
-      const result = UpdateSchema.safeParse(attendanceData);
-
-      console.log(attendanceData)
-
-      if(result.success) {
-        console.log("UPDATED ATTENDANCE:", result.data)
-        return
-      } else if (result.error) {
-        console.log("ERROR:", result.error)
-        return null
-      }
-        
       } catch (error) {
         console.error(error)
       }
