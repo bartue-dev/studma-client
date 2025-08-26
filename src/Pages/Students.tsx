@@ -26,9 +26,6 @@ export default function Students() {
     apiError
   } = useStudentData({studentName});
 
-  console.log("STUDENTS", students)
-
-
   return (
     <div className="relative">
       <form 
