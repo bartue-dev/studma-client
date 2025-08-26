@@ -11,12 +11,20 @@ type ApiError = {
   }
 }
 
+type ArgsTypes = {
+  selectGrade?: number,
+  selectSection?: string,
+  selectDate?: Date | undefined,
+  studentName?: string
+}
 
-export default function useStudentData(
-    selectGrade?: number,
-    selectSection?: string,
-    selectDate?: Date | undefined
-  )  {
+
+export default function useStudentData({
+    selectGrade,
+    selectSection,
+    selectDate,
+    studentName
+} : ArgsTypes)  {
   const { 
       data: allStudents,
       isSuccess,
@@ -31,21 +39,32 @@ export default function useStudentData(
         return []
       }
 
-      if (!selectGrade && !selectSection && !selectDate) {
+      if (!selectGrade &&
+          !selectSection &&
+          !selectDate &&
+          !studentName
+        ) {
         return allStudents?.studentData
       }
 
       const filteredStudents = allStudents.studentData.filter(student => {
         const grades = selectGrade ? student.grade === selectGrade : true;
         const section = selectSection ? student.section === selectSection : true;
-        const date = selectDate ? student?.attendanceDate.find(attendance => attendance.date === formatedDate) : true
+        const date = selectDate 
+                    ? student?.attendanceDate.find(attendance => attendance.date === formatedDate) 
+                    : true
 
-        return grades && section && date
+        const fullname = student.firstname + " " + student.lastname  
+        const name = studentName 
+                    ? fullname.toLocaleLowerCase().includes(studentName.toLocaleLowerCase()) 
+                    : true
+        
+        return grades && section && date && name
       });
       
       return filteredStudents
 
-    }, [allStudents, selectGrade, selectSection, selectDate, formatedDate])
+    }, [allStudents, selectGrade, selectSection, selectDate, formatedDate, studentName])
 
     //when request from the api have error
   const apiError = error as ApiError
