@@ -1,4 +1,4 @@
-import AddStudentDialog from "@/components/Common/AddStudentDialog";
+import AddStudentDialog from "@/components/Common/StudentPage/AddStudentDialog";
 import {
   Table,
   TableBody,
@@ -11,10 +11,11 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { BeatLoader } from "react-spinners";
-import { Ellipsis, Search } from "lucide-react";
+import { Search } from "lucide-react";
 
 import useStudentData from "@/hooks/useStudentData";
 import { useState, /* type FormEvent */ } from "react";
+import { StudentsActions } from "@/components/Common/StudentPage/StudentActions";
 
 export default function Students() {
   const [studentName, setStudentName] = useState("")
@@ -57,7 +58,7 @@ export default function Students() {
               <TableHead className="text-center">SECTION</TableHead>
               <TableHead className="text-center">TOTAL ABSENCES</TableHead>
               <TableHead className="text-center">TOTAL PRESENT DAYS</TableHead>
-              <TableHead className="text-right"></TableHead>
+              <TableHead>{/* header for action button */}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -92,8 +93,10 @@ export default function Students() {
                     >
                       {student.totalPresent.toString().padStart(2, "0")}
                     </TableCell>
-                  <TableCell className="text-right cursor-pointer">
-                    <Ellipsis />
+                  <TableCell className="cursor-pointer">
+                   <StudentsActions
+                    studentId={student.studentId}
+                   />
                   </TableCell>
                 </TableRow>
               ))}
