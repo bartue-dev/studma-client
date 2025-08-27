@@ -37,13 +37,24 @@ type addStudentResponse = {
   }
 }
 
-type addStudent = {
+type AddStudent = {
     firstname: string,
     lastname: string,
     grade: number,
     section: string,
     batch: string
 }
+
+type UpdateStudent = {
+    studentId: string,
+    firstname: string,
+    lastname: string,
+    grade: number,
+    section: string,
+    batch: string
+}
+
+
 export const studentsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getAllStudents: builder.query<studentsData, void>({
@@ -52,7 +63,7 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Students']
     }),
 
-    addStudent: builder.mutation<addStudentResponse, addStudent>({
+    addStudent: builder.mutation<addStudentResponse, AddStudent>({
       query: (data) => ({
         url: "/v1/students",
         method: "POST",
@@ -60,10 +71,21 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Students"]
     }),
+
+    updateStudent: builder.mutation<void, UpdateStudent>({
+      query: (data) => ({
+        url: `/v1/students/${data.studentId}`,
+        method: "PUT",
+        body: {...data}
+      }),
+      invalidatesTags: ["Students"]
+    }),
+
   })
 })
 
 export const { 
   useGetAllStudentsQuery,
-  useAddStudentMutation
+  useAddStudentMutation,
+  useUpdateStudentMutation
 } = studentsApiSlice
