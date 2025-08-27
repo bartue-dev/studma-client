@@ -11,7 +11,8 @@ import {
   DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu"
 
-import { Ellipsis } from "lucide-react";
+import { useDeleteStudentMutation } from "@/features/Student/StudentApiSlice";
+import { Ellipsis, LoaderCircle } from "lucide-react";
 import { EditStudentDataDialog } from "./EditStudentDataDialog";
 import { useState } from "react";
 
@@ -20,7 +21,19 @@ type PropsType = {
 }
 
 export function StudentsActions({studentId} : PropsType) {
-  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+
+  const [deleteStudent, {isLoading: deleteLoading}] = useDeleteStudentMutation();
+  
+    const handleDeleteStudent = async () => {
+      try {
+        await deleteStudent({
+          studentId
+        }).unwrap();
+      } catch (error) {
+        console.error(error)
+      }
+    }
 
   return (
     <div>
@@ -51,8 +64,12 @@ export function StudentsActions({studentId} : PropsType) {
             </DropdownMenuItem>
             <DropdownMenuItem
               className="cursor-pointer"
+              onSelect={() => {
+                handleDeleteStudent();
+              }}
             >
               Delete
+              {deleteLoading && <LoaderCircle className="animate-spin"/>}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
