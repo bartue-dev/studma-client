@@ -43,6 +43,7 @@ export default function AddStudentDialog() {
 
   const [addStudent, {isLoading}] = useAddStudentMutation();
 
+  //add student data function/submit
   const onSubmit = async(data: AddStudentData) => {
     console.log("GRADE", data.grade)
     try {
@@ -54,7 +55,9 @@ export default function AddStudentDialog() {
         batch: data.batch
       }).unwrap();
 
+      if(!isLoading) {
         setOpen(false)
+      }
     } catch (err) {
       console.error("catch error",err)
 
@@ -94,7 +97,7 @@ export default function AddStudentDialog() {
             <DialogTitle className="text-2xl">Add Student</DialogTitle>
           </DialogHeader>
           <div className="grid gap-2 mt-5">
-            <p className="text-sm text-red-600">{serverError?.error}</p>
+             {serverError && <p className="text-sm text-red-600">{serverError?.error}</p>}
             <div className="grid gap-1">
               <label htmlFor="firstname">Firstname</label>
               <Input 
@@ -148,14 +151,15 @@ export default function AddStudentDialog() {
                 className="cursor-pointer"
                 onClick={() => reset()}
               >
-                { isLoading && <LoaderCircle className="animate-spin"/> }
                 Cancel
               </Button>
             </DialogClose>
             <Button 
               type="submit"
               className="cursor-pointer"
+              disabled={isLoading}
             >
+              { isLoading && <LoaderCircle className="animate-spin"/> }
               Submit
             </Button>
           </DialogFooter>
