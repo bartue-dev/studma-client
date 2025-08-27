@@ -1,5 +1,6 @@
 import { format } from "date-fns"
 import { Check, X, ClockAlert, Handshake, Ellipsis  } from "lucide-react";
+import { useMemo } from "react";
 
 type AttendanceDateType = {
   attendanceDate: {
@@ -13,27 +14,36 @@ type AttendanceDateType = {
 
 export default function LastSevenDays({ attendanceDate }: AttendanceDateType) {
 
-  const getLast7Days = () => {
+
+  const getLast7Days = useMemo(() => {
+    // Map the attendanceDate data with only date and status
+    // Map helps to optimize the run time and avoid a nested loop
+    const dateMap = new Map(
+      attendanceDate
+        .filter(data => data.date)
+        .map(data => [data.date!, data.status])
+    );
+
     const dates = [];
     for (let i = 0; i < 7; i++) {
       const d = new Date(); // Get current date
       d.setDate(d.getDate() - i); // Subtract 'i' days
       const date = (format(d, "yyyy-MM-dd"));
 
-      const status = attendanceDate.find(data => data.date === date)?.status || null;
+      const status = dateMap.get(date) || null;
 
       dates.push({
         date,
         status
       })
     }
-    return dates.reverse(); // Reverse to get chronological order (oldest to newest)
-  } 
+    return dates.reverse();
+  },[attendanceDate])
 
   return (
     <div>
       <div className="flex items-center gap-2 w-fit">
-        {getLast7Days().map((data, i) => (
+        {getLast7Days.map((data, i) => (
           <div key={i} className="text-sm justify-items-center p-2 ">
             <h1 className="mb-2">{format(data.date, "dd")}</h1>
             <span>
