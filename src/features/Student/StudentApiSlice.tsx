@@ -55,6 +55,7 @@ type UpdateStudent = {
 }
 
 
+
 export const studentsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getAllStudents: builder.query<studentsData, void>({
@@ -81,11 +82,20 @@ export const studentsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Students"]
     }),
 
+    deleteStudent: builder.mutation<void, {studentId: string}>({
+      query: (data) => ({
+        url: `/v1/students/${data.studentId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Students"]
+    }),
+
   })
 })
 
 export const { 
   useGetAllStudentsQuery,
   useAddStudentMutation,
-  useUpdateStudentMutation
+  useUpdateStudentMutation,
+  useDeleteStudentMutation
 } = studentsApiSlice
