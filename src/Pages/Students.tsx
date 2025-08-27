@@ -14,7 +14,7 @@ import { BeatLoader } from "react-spinners";
 import { Search } from "lucide-react";
 
 import useStudentData from "@/hooks/useStudentData";
-import { useState, /* type FormEvent */ } from "react";
+import { useState } from "react";
 import { StudentsActions } from "@/components/Common/StudentPage/StudentActions";
 
 export default function Students() {
@@ -26,6 +26,7 @@ export default function Students() {
     isError,
     apiError
   } = useStudentData({studentName});
+  
 
   return (
     <div className="relative">
