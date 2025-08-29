@@ -68,7 +68,11 @@ export default function Attendance() {
                   />  
                 </div>
               </TableHead>
-              <TableHead>PREVIOUS 7 DAYS STATUS</TableHead>
+              <TableHead 
+                className="hidden xl:block content-center"
+              >
+                PREVIOUS 7 DAYS STATUS
+              </TableHead>
               <TableHead>
                 STATUS 
                 ({selectDate 
@@ -100,7 +104,7 @@ export default function Attendance() {
                     </TableCell>
                     <TableCell className="text-center"> {student.grade} </TableCell>
                     <TableCell className="text-center"> {student.section} </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden xl:block">
                      <LastSevenDays attendanceDate={student?.attendanceDate}/>
                     </TableCell>
                     <TableCell>
