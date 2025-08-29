@@ -75,8 +75,6 @@ const getStatusStyling = (status: string | null | undefined) => {
       return "bg-yellow-500 text-white hover:bg-yellow-500 hover:text-white";
     case "EXCUSE":
       return "bg-blue-500 text-white hover:bg-blue-500 hover:text-white";
-    default:
-      return "hover:bg-gray-100 hover:shadow-md hover:text-white";
   }
 }
 
@@ -133,8 +131,8 @@ export function StatusCombobox({ studentId, attendanceDate, date }: StatusCombob
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={`w-[150px] justify-between cursor-pointer
-             ${getStatusStyling(value)} `}
+          className={`w-[120px] md:w-[150px] justify-between cursor-pointer 
+             ${getStatusStyling(value)} ${!value && "hover: text-black"} `}
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
