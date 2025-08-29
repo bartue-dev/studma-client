@@ -56,7 +56,8 @@ export default function AddStudentDialog() {
       }).unwrap();
 
       if(!isLoading) {
-        setOpen(false)
+        setOpen(false);
+        reset();
       }
     } catch (err) {
       console.error("catch error",err)
@@ -139,6 +140,7 @@ export default function AddStudentDialog() {
               <Input 
                 type="text" 
                 id="batch" 
+                placeholder="ex. 2011-2012"
                 {...register("batch")}
               />
               {errors?.batch && <p className="text-xs text-red-500">{errors?.batch?.message}</p>}
@@ -159,8 +161,8 @@ export default function AddStudentDialog() {
               className="cursor-pointer"
               disabled={isLoading}
             >
-              { isLoading && <LoaderCircle className="animate-spin"/> }
               Submit
+              { isLoading && <LoaderCircle className="animate-spin"/> }
             </Button>
           </DialogFooter>
         </form>
