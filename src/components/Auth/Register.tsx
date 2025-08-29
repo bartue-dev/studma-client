@@ -150,7 +150,7 @@ export default function Register() {
       {/* submit button */}
       <Button 
         type="submit"
-        className="w-full border-none p-3 bg-blue-500 text-white cursor-pointer py-5"
+        className="w-full border-none p-3 bg-blue-500 text-white cursor-pointer py-5 hover:bg-blue-600 hover:text-white"
         disabled={isLoading ? true : false}
       >
         { isLoading && <LoaderCircle className="animate-spin"/> }
