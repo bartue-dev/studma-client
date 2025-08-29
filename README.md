@@ -49,4 +49,4 @@
             -   [x] dropdown menu. Edit and delete button.
             -   [x] edit student data if edit menu is click
             -   [x] delete student if delete menu is click
--   [] expand the project into full student management system
+-   [ ] expand the project into full student management system
