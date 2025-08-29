@@ -22,7 +22,7 @@ export default function Home() {
           </div>
 
           {/* content */}
-          <div className="flex-1 p-8 mt-8">
+          <div className="flex-1 p-8 mt-4">
             <Outlet/>
           </div>
         </div>
