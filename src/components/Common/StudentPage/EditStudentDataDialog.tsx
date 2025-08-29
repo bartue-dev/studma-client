@@ -127,7 +127,7 @@ export function EditStudentDataDialog({setEditDialogOpen, studentId} : PropsType
     <DialogContent className="sm:max-w-[425px]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader>
-          <DialogTitle className="text-2xl">Edit profile</DialogTitle>
+          <DialogTitle className="text-2xl">Edit Student</DialogTitle>
         </DialogHeader>
         <div className="grid gap-2 mt-5">
           {serverError && <p className="text-sm text-red-600">{serverError?.error}</p>}
@@ -176,6 +176,7 @@ export function EditStudentDataDialog({setEditDialogOpen, studentId} : PropsType
             <Input 
               type="text"
               id="batch" 
+              placeholder="ex. 2011-2012"
               {...register("batch")} 
               defaultValue={currentStudent?.batch} 
             />
@@ -192,8 +193,8 @@ export function EditStudentDataDialog({setEditDialogOpen, studentId} : PropsType
             type="submit"
             disabled={updateLoading}
           >
-            { updateLoading && <LoaderCircle className="animate-spin"/>}
             Save changes
+            { updateLoading && <LoaderCircle className="animate-spin"/>}
           </Button>
         </DialogFooter>
       </form>
