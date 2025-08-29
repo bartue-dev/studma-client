@@ -20,9 +20,9 @@
 -   ![ReactJS](https://img.shields.io/badge/REACTJS-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 -   ![shadcn/ui](https://img.shields.io/badge/SHADCN.UI-000000?style=for-the-badge)
 -   ![React Router](https://img.shields.io/badge/REACT--ROUTER--DOM-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
-    ![Redux](https://img.shields.io/badge/REDUX-764ABC?style=for-the-badge&logo=redux&logoColor=black)
-    ![Zod](https://img.shields.io/badge/ZOD-3E67B1?style=for-the-badge&logo=zod&logoColor=black)
-    ![React_Hook_Form](https://img.shields.io/badge/REACT_HOOK_FORM-EC5990?style=for-the-badge&logo=reacthookform&logoColor=black)
+-   ![Redux](https://img.shields.io/badge/REDUX-764ABC?style=for-the-badge&logo=redux&logoColor=black)
+-   ![Zod](https://img.shields.io/badge/ZOD-3E67B1?style=for-the-badge&logo=zod&logoColor=black)
+-   ![React_Hook_Form](https://img.shields.io/badge/REACT_HOOK_FORM-EC5990?style=for-the-badge&logo=reacthookform&logoColor=black)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
