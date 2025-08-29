@@ -15,7 +15,7 @@
 
 ## Demo
 
-[![Demo video](demo video)](https://youtu.be/jbKYT4xEpEY)
+[![Demo link]](https://youtu.be/jbKYT4xEpEY)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
