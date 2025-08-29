@@ -51,14 +51,14 @@ export default function Students() {
         className="border shadow-sm bg-white p-3 rounded-md h-[480px] overflow-auto"
         style={{ scrollbarWidth: "thin"}}
       >
-        <Table className="w-full h-full">
+        <Table className="w-full h-full text-xs lg:text-sm">
           <TableHeader>
             <TableRow>
               <TableHead className="w-[200px]">STUDENT NAME</TableHead>
               <TableHead className="text-center">GRADE</TableHead>
               <TableHead className="text-center">SECTION</TableHead>
-              <TableHead className="text-center">TOTAL ABSENCES</TableHead>
-              <TableHead className="text-center">TOTAL PRESENT DAYS</TableHead>
+              <TableHead className="text-center">ABSENCES</TableHead>
+              <TableHead className="text-center">PRESENT DAYS</TableHead>
               <TableHead>{/* header for action button */}</TableHead>
             </TableRow>
           </TableHeader>
