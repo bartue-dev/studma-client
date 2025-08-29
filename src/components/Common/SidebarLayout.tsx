@@ -4,9 +4,11 @@ import { AppSidebar } from "./AppSidebar"
 export default function SidebarLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <SidebarTrigger className="rounded-none px-5 md:hidden absolute top-4"/>
+      <AppSidebar/>
       <main className="w-full">
+        <div className="bg-gray-50">
+          <SidebarTrigger className="top-4 text-gray-700"/>
+        </div>
         {children}
       </main>
     </SidebarProvider>
