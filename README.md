@@ -10,6 +10,10 @@
 ## About The Project
 
 -   practice typescript, redux, zod and react hook form
+    -   typescript for proper typing
+    -   redux for setting up the authentication and query using the RTK
+    -   zod for validation
+    -   react hook form for handling the forms
 -   right now it only have a attendance system
 -   soon expand the project into full student management system
 
