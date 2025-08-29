@@ -13,6 +13,10 @@
 -   right now it only have a attendance system
 -   soon expand the project into full student management system
 
+## Demo
+
+![Demo Video](studma-demo-vid.webm)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Built With
